@@ -1,0 +1,60 @@
+package org.amalitech.practice;
+
+public class Sample {
+	public static void main(String[] args) {
+		int num = 6;
+		System.out.println();
+		for (int i = 0; i<6; i++) {
+			System.out.print(num + "  >");
+			if(i<3) {
+			System.out.print("        ");	
+			}else{
+			for(int j = 0; j<1; j++) {
+				System.out.print(" #######");
+				}
+			}
+			if(i<1) {
+				System.out.print("        ");	
+				}else {
+				for(int j = 0; j<1; j++) {
+					System.out.print(" #######");
+					}
+				}
+			if(i<0) {
+				System.out.print("        ");	
+				}else {
+				for(int j = 0; j<1; j++) {
+					System.out.print(" #######");
+					}
+				}
+			if(i<2) {
+				System.out.print("        ");	
+				}else {
+				for(int j = 0; j<1; j++) {
+					System.out.print(" #######");
+					}
+				}
+			if(i<4) {
+				System.out.print("        ");	
+				}else {
+				for(int j = 0; j<1; j++) {
+					System.out.print(" #######");
+					}
+				}
+			
+			System.out.println();
+			num--;
+		}
+		
+			System.out.print("    ");
+		for(int i = 0; i<5; i++) {
+			System.out.print("+-------");
+		}
+		System.out.print("+");
+		
+		System.out.print("\n   " + 0 + "       " + 21 + "      " + 41 + "      " + 61 + "      " + 81 +"      "+ 100 );
+		
+		
+	}
+
+}
