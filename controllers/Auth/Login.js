@@ -1,73 +1,49 @@
 const User = require('../../models').User;
 const UserAccount = require('../../models').UserAccount;
 const crypto = require('crypto');
-let secret = "connect";
-
-
-module.exports.GetLogin = (req, res, next) => {
-
-    //render login page
-    if(req.session.loggedIn===true){
-        res.redirect('/');
-    }else{
-        res.render(
-            'auth/login',
-            {
-                page:'login'
-            }
-        )
-    }
-
-      
-};
-
-
-
+const {secret} = require('../../config/keys');
 
 
 //perform login
 module.exports.DoLogin = async (req, res, next) => {
+    let api_response = {
+        error: '',
+        success: '',
+        token: '',
+        userid:'',
+    }
+    let userAccount= {};
+    try {
+        userAccount = {
+            email: req.body.email,
+            password: hashPassword(req.body.password)
+        };
+    }catch(error){
+        console.log(error);
+        res.json({"error":"empty_fields"});
+    }
 
-   //declare a variable and assign request body to it 
-    let userAccount = {
-        email: req.body.email,
-        password: hashPassword(req.body.password)
-    };
-
-    //set logged in session to false
-    req.session.loggedIn = false; 
-    let ret_userAccount = await UserAccount.findOne({
+    let ret_userAccount = await User.findOne({
         where: {email: userAccount.email},
-        include: [User]
+        include: [UserAccount]
     });
-    
-  //check if user account exits in database 
     if (ret_userAccount !== null) {
-        if (userAccount.password === ret_userAccount.password) {           
-            req.session.userAccount = ret_userAccount;
-            req.session.user = ret_userAccount.User;
-            req.session.loginSuccessMessage = "Login Successful";
-            req.session.loggedIn = true;
-            res.send({loginRes:"success", RedirectUrl:"/user/"});
+        if (userAccount.password === ret_userAccount.UserAccount.password) {      
+            api_response.token = ret_userAccount.UserAccount.token
+            api_response.userid = ret_userAccount.id
+            api_response.success = "success";
         } else {
             console.log("Wrong Password");
-            req.session.loginErrorMessage = "Wrong Password";
-            res.send({loginRes:"Wrong Password"});
+            api_response.error = "wrong_password"
         }
-    }else{
+    } else {
         console.log("Wrong Username Or User does not exist");
-        req.session.loginErrorMessage = "Wrong Username Or User does not exist";
-        res.send({loginRes:"Wrong email"});
+        api_response.error = "not_exist"
     }
+
+    res.json(api_response);
 };
-//logout
-module.exports.Logout = (req, res, next) => {
-    req.session.destroy((err) => {
-        if (err) console.log('Error : Failed to destroy the session during logout.', err);
-        req.user = null;
-        res.redirect('/login');
-    });
-};
+
 
 //method for hashing password
 hashPassword = (password) =>{

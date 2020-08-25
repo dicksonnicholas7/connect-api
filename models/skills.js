@@ -1,12 +1,19 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Skills = sequelize.define('Skills', {
-    skills_name: DataTypes.STRING
+    name: DataTypes.STRING,
+    details: DataTypes.STRING
   }, {});
   Skills.associate = function(models) {
-    Skills.belongsTo(models.SkillsCategory,{
-      foreignKey: 'skills_category_id',
-      onUpdate: 'CASCADE'
+    // associations can be defined here
+    Skills.belongsTo(models.User,{
+      foreignKey: 'SkillUserId',
+      onDelete:'CASCADE'
+    });
+
+    Skills.belongsTo(models.BusinessUser,{
+      foreignKey: 'SkillBusId',
+      onDelete:'CASCADE'
     });
   };
   return Skills;

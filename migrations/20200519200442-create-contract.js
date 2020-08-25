@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      job_id:{
+      JobId:{
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references:{
@@ -16,25 +16,25 @@ module.exports = {
           key:'id'
         }
       },
-      contract_status: {
+      status: {
         type: Sequelize.STRING
       },
-      contract_acceptance: {
+      acceptance: {
         type: Sequelize.STRING
       },
-      contract_note: {
+      note: {
         type: Sequelize.STRING
       },
-      contract_freelance_review: {
+      freelance_review: {
         type: Sequelize.STRING
       },
-      contract_client_review: {
+      client_review: {
         type: Sequelize.STRING
       },
-      contract_freelance_rating: {
+      freelance_rating: {
         type: Sequelize.INTEGER
       },
-      contract_client_rating: {
+      client_rating: {
         type: Sequelize.INTEGER
       },
       createdAt: {

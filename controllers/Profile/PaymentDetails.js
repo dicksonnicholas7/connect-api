@@ -5,9 +5,21 @@ const User = require('../../models').User;
 const UserAccount = require('../../models').UserAccount;
 const UserPaymentInfo = require('../../models').UserPaymentInfo;
 const crypto = require('crypto');
-let secret = "connect";
+let secret = "group3";
 
-
+module.exports.GetPaymentDetails = async (req, res, next) => {
+    let user_payment = await UserPaymentInfo.findOne({where:{UserId:res.locals.user.id} });
+    req.session.user.UserPaymentInfo  = user_payment;
+    res.render(
+        'profile/payment-details',
+        {
+            page:'payment',
+            success:'',
+            error:'',
+            accountNumber:'',
+        }
+    )
+};
 
 module.exports.CreateStripeAccount = async (req, res, next) => {
     let user_payment = await UserPaymentInfo.findOne({where:{UserId:res.locals.user.id} });

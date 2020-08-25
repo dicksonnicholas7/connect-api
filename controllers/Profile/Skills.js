@@ -1,109 +1,114 @@
-const User = require('../../models').User;
-const UserSkills = require('../../models').UserSkills;
-const Portfolio = require('../../models').Portfolio;
 const Skills = require('../../models').Skills;
-const Experience = require('../../models').Experience;
-const UserAccount = require('../../models').UserAccount;
-const multer = require('multer'); 
-const path = require('path');
-const crypto = require('crypto');
 
 
-
-
-module.exports.AddSkills = async (req, res, next) => {
-
-    let response = {
+module.exports.GetAllUserSkills = async (req, res, next) => {
+    let api_response = {
         error:'',
-        success:''
+        success:'',
     }
 
-let userSkills
+        let user_skills = await Skills.findAll({where:{SkillUserId:req.params.userid}});
+        console.log(user_skills)
+        if(user_skills!==null){
+            api_response.success = 'success';
+            api_response.response = user_skills;
+        }else{
+            api_response.error = 'error'
+        }
 
-let skills = req.body.skills;
+    res.json(api_response);
+}
 
-console.log(skills)
 
-
-if(skills.length > 1){
-  
-for(i=0;i<skills.length;i++){
-
-    userSkills = {
-        user_account_id:req.body.id,
-        user_skills_name:skills[i]
+module.exports.AddSkillUser = async (req, res, next) =>{
+    let api_response = {
+        error: '',
+        success: ''
     };
+    let skillset = {};
 
-    UserSkills.create(userSkills);
-}
-
-    user_skills = await UserSkills.findAll({where:{user_account_id:req.body.id}}).then(server_response => {
-        res.status(200);
-        response.success = server_response;
-        response.error = '';
-    }).catch(err => {
-        res.status(400);
-        response.success = '';
-        response.error = err;
-    });
-}else{
-    if(skills.length === 1){
-
-        userSkills = {
-            user_account_id:req.body.id,
-            skills_id:skills[0]
+    try {
+        skillset = {
+            name: req.body.name,
+            details: req.body.details,
+            SkillUserId: req.body.userid
         };
-    
-        UserSkills.create(userSkills).then(server_response => {
-            res.status(200);
-            response.success = server_response;
-            response.error = '';     
-        }).catch(err => {
-            res.status(400);
-            response.success = '';
-            response.error = err;
-        });
-    }else{
-        response.error = 'please select a skill'
-    }
-}
-
-res.json(response);
-
-}
-
-module.exports.UpdateSkill = async(req, res, next) => {
-    let userId = res.locals.userAccount.user_account_id;
-    let skillId = req.body.skillId;
-
-    let skill_update_details = {
-        user_skills_name : req.body.skill_name
+    } catch (error) {
+        console.log(error);
+        res.json({"error":"empty_fields"});
     }
 
-    UserSkills.update(skill_update_details,{where:{id:skillId}}).then(skill_update_res => {
-        console.log('skill updated successfully');
-    }).catch(err=>{
-        console.log(err)
-    })
-}
+    let skills_added = Skills.create(skillset);
+    (skills_added) ? api_response.success = "success" : api_response.error = "error";
+    res.json(api_response);
+};
 
+module.exports.AddSkillBusiness = async (req, res, next) =>{
+    let api_response = {
+        error: '',
+        success: ''
+    };
+    let skillset = {};
 
-module.exports.DeleteSkill = async (req, res, next) => {
-    let skillId = req.params.id;
+    try {
+        skillset = {
+            name: req.body.name,
+            details: req.body.details,
+            SkillBusId: req.body.busid
+        };
+    } catch (error) {
+        console.log(error);
+        res.json({"error":"empty_fields"});
+    }
 
-    UserSkills.destroy({where:{id:skillId}}).then(skill_res=> {
-        console.log("skill deleted")
-    }).catch(err=>{
-        console.log(err)
-    })
-}
+    let skills_added = Skills.create(skillset);
+    (skills_added) ? api_response.success = "success" : api_response.error = "error";
+    res.json(api_response);
+};
 
+module.exports.UpdateSkillUser = async (req, res, next) =>{
+    let api_response = {
+        error: '',
+        success: ''
+    };
+    let skillset = {};
+    let skillid = "";
+    try {
+        skillset = {
+            name: req.body.name,
+            details: req.body.details
+        };
+        skillid = req.body.skillid;
+    } catch (error) {
+        console.log(error);
+        res.json({"error":"empty_fields"});
+    }
 
+    let skills_added = Skills.update(skillset, {where: {id:skillid} });
+    (skills_added) ? api_response.success = "success" : api_response.error = "error";
+    res.json(api_response);
 
+};
 
-//hash password
-hashPassword = (password) =>{
-    return crypto.createHmac('sha256', secret)
-        .update(password)
-        .digest('hex');
+module.exports.UpdateSkillBusiness = async (req, res, next) =>{
+    let api_response = {
+        error: '',
+        success: ''
+    };
+    let skillset = {};
+    let skillid = "";
+    try {
+        skillset = {
+            name: req.body.name,
+            details: req.body.details
+        };
+        skillid = req.body.skillid;
+    } catch (error) {
+        console.log(error);
+        res.json({"error":"empty_fields"});
+    }
+
+    let skills_added = Skills.update(skillset, {where: {id:skillid} });
+    (skills_added) ? api_response.success = "success" : api_response.error = "error";
+    res.json(api_response);
 };

@@ -8,15 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      client_id:{
+      ClientId:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
-        references:{ 
-          model: 'UserAccounts',
-          key:'user_account_id'
+        references:{
+          model: 'Users',
+          key:'id'
         }
       },
-      job_category_id:{
+      CatId:{
         type: Sequelize.INTEGER,
         onUpdate: 'CASCADE',
         references:{
@@ -24,27 +24,27 @@ module.exports = {
           key:'id'
         }
       },
-      job_title: {
+      title: {
         type: Sequelize.STRING
       },
-      job_details: {
+      details: {
         type: Sequelize.STRING
       },
-      job_timeLength: {
+      timeLength: {
         type: Sequelize.STRING
       },
-      job_price: {
+      price: {
         type: Sequelize.DECIMAL(6, 2)
       },
-      job_status: {
+      skills: {
         type: Sequelize.STRING
       },
-      job_jobType: {
-        type: Sequelize.INTEGER
+      status: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       updatedAt: {
         allowNull: false,

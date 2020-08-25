@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      job_id:{
+      JobId:{
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references:{
@@ -16,7 +16,23 @@ module.exports = {
           key:'id'
         }
       },
-      chat_message: {
+      SenderId:{
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'Users',
+          key:'id'
+        }
+      },
+      ReceiverId:{
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'Users',
+          key:'id'
+        }
+      },
+      message: {
         type: Sequelize.STRING
       },
       createdAt: {

@@ -8,20 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      sender_id:{
+      SenderId:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         references:{
-          model: 'UserAccounts',
-          key:'user_account_id'
+          model: 'Users',
+          key:'id'
         }
       },
-      receiver_id:{
+      ReceiverId:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         references:{
-          model: 'UserAccounts',
-          key:'user_account_id'
+          model: 'Users',
+          key:'id'
         }
       },
       message: {

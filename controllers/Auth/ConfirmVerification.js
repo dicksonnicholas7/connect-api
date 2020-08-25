@@ -23,7 +23,7 @@ module.exports.SendMailConfirmVerify = (emailReceiver, token)=>{
         service: "gmail",
         auth: {
             type: "OAuth2",
-            user: "amalitechconnect@gmail.com",
+            user: "jay4node@gmail.com",
             clientId: client_id,
             clientSecret: client_secret,
             refreshToken: refresh_token,
@@ -32,9 +32,9 @@ module.exports.SendMailConfirmVerify = (emailReceiver, token)=>{
     });
     const mailOptions = {
         to: emailReceiver,
-        from: 'Connect',
+        from: 'Group 3 Freelancer',
         subject: 'Successful Verification',
-        text: `Your email has successfully been verified.`
+        text: `Welcome to Group 3 freelancer. Your email has successfully been verified.`
     };
     transporter.sendMail(mailOptions)
         .then(() => {

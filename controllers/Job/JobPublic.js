@@ -3,23 +3,33 @@ const Job = require('../../models').Job;
 const JobApplication = require('../../models').JobApplication;
 const JobCategory = require('../../models').JobCategory;
 const User = require('../../models').User;
-const UserAccount = require('../../models').UserAccount;
-
-
-module.exports.GetPublicJobs = (req, res, next ) => {
-    res.render(
-        'find-jobs',
-        {
-                page:'find-jobs'
-        }
-        )
-}
-
 
 module.exports.GetIndex = async (req, res, next) => {
-
+    let jobs = await Job.findAll( {
+        include: [
+            {
+                model: JobCategory,
+                as: 'JobCategory'
+            },
+            {
+                model: User,
+                as: 'User'
+            }
+        ],
+        order:[['createdAt', 'DESC']],
+        limit:5,
+        offset:0
+    });
+    let category = await JobCategory.findAll();
+    let searchResult = "All Jobs";
     res.render(
-        'index'
+        'index',
+        {
+            jobs,
+            category,
+            searchResult,
+            page: 'index'
+        }
     )
 };
 
@@ -31,8 +41,8 @@ module.exports.GetAllJobs = async (req, res, next) => {
                 as: 'JobCategory'
             },
             {
-                model: UserAccount,
-                as: 'UserAccount'
+                model: User,
+                as: 'User'
             }
         ],
         order:[['createdAt', 'DESC']],
@@ -67,8 +77,8 @@ module.exports.GetPageAllJobs = async (req, res, next)=>{
                 as: 'JobCategory'
             },
             {
-                model: UserAccount,
-                as: 'UserAccount'
+                model: User,
+                as: 'User'
             }
         ],
         limit:10,
@@ -168,14 +178,117 @@ module.exports.GetJobsCategoryAndSearch = async (req, res, next) => {
         }
     )
 };
-module.exports.GetJobs = async (req, res, next) => {
-    res.render(
-        'job/jobs',
-        {
 
-            page:'jobs'
+module.exports.JobDetail = async (req, res, next) => {
+    let jobId = req.params.id;
+    let job = await Job.findOne({
+        where:{id:jobId},
+        include: [
+            {
+                model: JobCategory,
+                as: 'JobCategory'
+            },
+            {
+                model: User,
+                as: 'User'
+            }
+        ]
+    });
+    // let job_offerred = JobApplication.findOne({
+    //     where: {
+    //         [Op.and]:[
+    //             {JobId:jobId},
+    //             {status:'awarded'}
+    //         ]
+    //     }
+    // });
+    let related_jobs = await Job.findAll( {
+        where:{CatId:job.CatId},
+        include: [
+            {
+                model: JobCategory,
+                as: 'JobCategory'
+            },
+            {
+                model: User,
+                as: 'User'
+            }
+        ],
+        limit: 2
+    });
+    let user_applied = false;
+    let user_application = {};
+    if(!req.session.loggedIn){
 
+    }else {
+        user_application = await JobApplication.findOne({
+            where: {
+                [Op.and]: [
+                    {JobId: jobId},
+                    {FreelanceId: res.locals.user.id}
+                ]
+            }
+        });
+        if (user_application) {
+            user_applied = true;
+        }
     }
-    
+    res.render(
+        'single-job-info',
+        {
+            job,
+            related_jobs,
+            user_application,
+            user_applied,
+            page:'jobs'
+        }
     )
-}
+};
+
+
+module.exports.GetJobsFilter = async (req, res, next) => {
+    let jobs = {};
+    let searchResult = "";
+    if(req.body.filter_date!==null && req.body.filter_price_min && req.body.filter_price_max){
+        jobs = await Job.findAll({
+            where: {
+                [Op.and]: [
+                    {
+                        price:{
+                            [Op.between]:
+                                [parseFloat(req.body.filter_price_min), parseFloat(req.body.filter_price_max)]                       
+                        }
+                },
+                    {createdAt: req.body.filter_date}
+                ]
+            },
+            include: JobCategory
+        });
+        searchResult = "";
+    }else{
+        jobs = await Job.findAll({
+            where: {
+                price:{
+                    [Op.between]:
+                        [parseFloat(req.body.filter_price_min), parseFloat(req.body.filter_price_max)]                        
+                }              
+            },
+            include: JobCategory
+        });
+        searchResult = "";
+    }
+
+    let category = await JobCategory.findAll();
+    let jobCount = await Job.count();
+    res.render(
+        'jobs',
+        {
+            jobs,
+            jobCount,
+            category,
+            searchResult,
+            page: 'jobs',
+            page_no: 1
+        }
+    )
+};

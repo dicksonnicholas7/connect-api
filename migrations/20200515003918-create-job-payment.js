@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      job_id:{
+      JobId:{
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references:{
@@ -22,13 +22,13 @@ module.exports = {
       free_amount: {
         type: Sequelize.STRING
       },
-      client_payment_receipt: {
+      clientPaymentReceipt: {
         type: Sequelize.STRING
       },
-      client_pay: {
+      clientPay: {
         type: Sequelize.BOOLEAN
       },
-      freelance_pay: {
+      freelancePay: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {

@@ -8,15 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      freelancer_id:{
+      FreelanceId:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         references:{
-          model: 'UserAccounts',
-          key:'user_account_id'
+          model: 'Users',
+          key:'id'
         }
       },
-      job_id:{
+      JobId:{
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references:{
@@ -24,10 +24,7 @@ module.exports = {
           key:'id'
         }
       },
-      application_status: {
-        type: Sequelize.STRING
-      },
-      application_message: {
+      status: {
         type: Sequelize.STRING
       },
       createdAt: {

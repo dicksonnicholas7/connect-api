@@ -1,17 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const JobFiles = sequelize.define('JobFiles', {
-    job_filename: DataTypes.STRING
+    filename: DataTypes.STRING
   }, {});
   JobFiles.associate = function(models) {
     // associations can be defined here
     JobFiles.belongsTo(models.Job,{
-      foreignKey: 'job_id',
+      foreignKey: 'JobId',
       onDelete: 'CASCADE'
     });
 
-    JobFiles.belongsTo(models.UserAccount,{
-      foreignKey: 'user_account_id',
+    JobFiles.belongsTo(models.User,{
+      foreignKey: 'UserId',
       onDelete: 'CASCADE'
     });
 

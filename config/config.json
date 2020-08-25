@@ -1,26 +1,23 @@
 {
   "development": {
     "username": "root",
-    "password": "",
-    "database": "connect_db",
-    "host": "localhost",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "password": null,
+    "database": "db_freelance",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
-    "host": "localhost",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
   "production": {
-    "username": "freeamdb@freeamdb",
-    "password": "P@$$W0rd1",
-    "database": "connect_db",
-    "host": "freeamdb.mysql.database.azure.com",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }

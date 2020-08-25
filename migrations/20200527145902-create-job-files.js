@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      job_id:{
+      JobId:{
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references:{
@@ -16,15 +16,15 @@ module.exports = {
           key:'id'
         }
       },
-      user_account_id:{
+      UserId:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         references:{
-          model: 'UserAccounts',
-          key:'user_account_id'
+          model: 'Users',
+          key:'id'
         }
       },
-      job_filename: {
+      filename: {
         type: Sequelize.STRING
       },
       createdAt: {

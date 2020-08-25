@@ -8,15 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_account_id:{
+      UserId:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         references:{
-          model: 'UserAccounts',
-          key:'user_account_id'
+          model: 'Users',
+          key:'id'
         }
       },
-      account_number: {
+      accountNumber: {
         type: Sequelize.STRING
       },
       createdAt: {
