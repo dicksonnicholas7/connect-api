@@ -8,7 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      job_cat_name: {
+        type: Sequelize.STRING
+      },
+      job_cat_picture: {
         type: Sequelize.STRING
       },
       createdAt: {

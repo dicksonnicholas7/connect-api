@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Portfolios', {
+    return queryInterface.createTable('UserSkills', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,22 +15,13 @@ module.exports = {
           model: 'UserAccounts',
           key:'user_account_id'
         }
-      }, 
-      title: {
-        type: Sequelize.STRING
       },
-      description: {
-        type: Sequelize.STRING
-      },
-      project_link: {
-        type: Sequelize.STRING
-      },
-      picture: {
+      user_skills_name:{
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
@@ -39,12 +30,12 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Portfolios');
+    return queryInterface.dropTable('UserSkills');
   }
 };'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Portfolios', {
+    return queryInterface.createTable('UserSkills', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -58,22 +49,13 @@ module.exports = {
           model: 'UserAccounts',
           key:'user_account_id'
         }
-      }, 
-      portfolio_title: {
-        type: Sequelize.STRING
       },
-      portfolio_description: {
-        type: Sequelize.STRING
-      },
-      portfolio_project_link: {
-        type: Sequelize.STRING
-      },
-      portfolio_picture: {
+      user_skills_name:{
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
@@ -82,6 +64,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Portfolios');
+    return queryInterface.dropTable('UserSkills');
   }
 };

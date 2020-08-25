@@ -8,7 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      email: {
+      user_account_id:{
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'UserAccounts',
+          key:'user_account_id'
+        }
+      },
+      payment_email: {
         type: Sequelize.STRING
       },
       apikey: {

@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const UserPaymentInfo = sequelize.define('UserPaymentInfo', {
-    accountNumber: DataTypes.STRING
+    account_number: DataTypes.STRING
   }, {});
   UserPaymentInfo.associate = function(models) {
     // associations can be defined here
-    UserPaymentInfo.belongsTo(models.User,{
-      foreignKey: 'UserId',
+    UserPaymentInfo.belongsTo(models.UserAccount,{
+      foreignKey: 'user_account_id',
       onDelete: 'CASCADE'
     });
   };

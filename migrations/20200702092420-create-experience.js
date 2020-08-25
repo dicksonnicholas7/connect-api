@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Portfolios', {
+    return queryInterface.createTable('Experiences', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,22 +15,34 @@ module.exports = {
           model: 'UserAccounts',
           key:'user_account_id'
         }
-      }, 
-      title: {
+      },
+      exp_position: {
         type: Sequelize.STRING
       },
-      description: {
+      exp_company: {
         type: Sequelize.STRING
       },
-      project_link: {
+      exp_country: {
         type: Sequelize.STRING
       },
-      picture: {
+      exp_city: {
+        type: Sequelize.STRING
+      },
+      exp_from: {
+        type: Sequelize.DATEONLY
+      },
+      exp_to: {
+        type: Sequelize.DATEONLY
+      },
+      exp_responsibilities: {
+        type: Sequelize.STRING
+      },
+      exp_file: {
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
@@ -39,12 +51,12 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Portfolios');
+    return queryInterface.dropTable('Experiences');
   }
 };'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Portfolios', {
+    return queryInterface.createTable('Experiences', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -58,22 +70,34 @@ module.exports = {
           model: 'UserAccounts',
           key:'user_account_id'
         }
-      }, 
-      portfolio_title: {
+      },
+      exp_position: {
         type: Sequelize.STRING
       },
-      portfolio_description: {
+      exp_company: {
         type: Sequelize.STRING
       },
-      portfolio_project_link: {
+      exp_country: {
         type: Sequelize.STRING
       },
-      portfolio_picture: {
+      exp_city: {
+        type: Sequelize.STRING
+      },
+      exp_from: {
+        type: Sequelize.DATEONLY
+      },
+      exp_to: {
+        type: Sequelize.DATEONLY
+      },
+      exp_responsibilities: {
+        type: Sequelize.STRING
+      },
+      exp_file: {
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
@@ -82,6 +106,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Portfolios');
+    return queryInterface.dropTable('Experiences');
   }
 };

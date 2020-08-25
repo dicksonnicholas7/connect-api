@@ -1,33 +1,19 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Qualifications', {
+    return queryInterface.createTable('SkillsCategories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      UserId:{
-        type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        references:{
-          model: 'Users',
-          key:'id'
-        }
-      },
-      prof_cert: {
-        type: Sequelize.STRING
-      },
-      con_org: {
-        type: Sequelize.STRING
-      },
-      summary: {
+      skills_cat_name: {
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
@@ -36,6 +22,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Qualifications');
+    return queryInterface.dropTable('SkillsCategories');
   }
 };

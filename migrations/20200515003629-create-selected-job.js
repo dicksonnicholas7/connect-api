@@ -1,38 +1,40 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Skills', {
+    return queryInterface.createTable('SelectedJobs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
-      },
-      details: {
-        type: Sequelize.STRING
-      },
-      SkillUserId:{
+      client_id:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         references:{
-          model: 'Users',
-          key:'id'
+          model: 'UserAccounts',
+          key:'user_account_id'
         }
       },
-      SkillBusId:{
+      freelancer_id:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         references:{
-          model: 'BusinessUsers',
+          model: 'UserAccounts',
+          key:'user_account_id'
+        }
+      },
+      job_id:{
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'Jobs',
           key:'id'
         }
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       updatedAt: {
         allowNull: false,
@@ -41,6 +43,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Skills');
+    return queryInterface.dropTable('SelectedJobs');
   }
 };

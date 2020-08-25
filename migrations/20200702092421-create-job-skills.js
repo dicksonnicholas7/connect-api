@@ -1,36 +1,27 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Portfolios', {
+    return queryInterface.createTable('JobSkills', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_account_id:{
-        type: Sequelize.UUID,
+      job_id:{
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references:{
-          model: 'UserAccounts',
-          key:'user_account_id'
+          model: 'Jobs',
+          key:'id'
         }
-      }, 
-      title: {
-        type: Sequelize.STRING
       },
-      description: {
-        type: Sequelize.STRING
-      },
-      project_link: {
-        type: Sequelize.STRING
-      },
-      picture: {
+      job_skills_name:{
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
@@ -39,41 +30,32 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Portfolios');
+    return queryInterface.dropTable('JobSkills');
   }
 };'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Portfolios', {
+    return queryInterface.createTable('JobSkills', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_account_id:{
-        type: Sequelize.UUID,
+      job_id:{
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references:{
-          model: 'UserAccounts',
-          key:'user_account_id'
+          model: 'Jobs',
+          key:'id'
         }
-      }, 
-      portfolio_title: {
-        type: Sequelize.STRING
       },
-      portfolio_description: {
-        type: Sequelize.STRING
-      },
-      portfolio_project_link: {
-        type: Sequelize.STRING
-      },
-      portfolio_picture: {
+      job_skills_name:{
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
@@ -82,6 +64,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Portfolios');
+    return queryInterface.dropTable('JobSkills');
   }
 };

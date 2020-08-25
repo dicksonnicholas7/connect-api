@@ -1,34 +1,34 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Education', {
+    return queryInterface.createTable('Certifications', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      UserId:{
+      }, 
+      user_account_id:{
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         references:{
-          model: 'Users',
-          key:'id'
+          model: 'UserAccounts',
+          key:'user_account_id'
         }
       },
-      country: {
+      cert_name: {
         type: Sequelize.STRING
       },
-      uni: {
+      issued_by: {
         type: Sequelize.STRING
       },
-      cert: {
-        type: Sequelize.STRING
+      issued_date: {
+        type: Sequelize.DATEONLY
       },
-      start_year: {
-        type: Sequelize.STRING
+      valid_till: {
+        type: Sequelize.DATEONLY
       },
-      endyear: {
+      cert_file: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -42,6 +42,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Education');
+    return queryInterface.dropTable('Certifications');
   }
 };

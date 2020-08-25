@@ -1,33 +1,107 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const UserAccount = sequelize.define('UserAccount', {
-    username: DataTypes.STRING,
+    user_account_id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     password: DataTypes.STRING,
     verified: DataTypes.BOOLEAN,
+    first_time: DataTypes.BOOLEAN,
     blocked: DataTypes.BOOLEAN,
-    token: DataTypes.STRING
+    profile_complete_percentage:DataTypes.INTEGER,
+    approved: DataTypes.BOOLEAN,
+    token: DataTypes.STRING,
+    email_hash: DataTypes.STRING,
+    resetPasswordToken: DataTypes.STRING,
+    resetPasswordExpires: DataTypes.DATE,
   }, {});
   UserAccount.associate = function(models) {
     // associations can be defined here
-    UserAccount.belongsTo(models.User,{
-      foreignKey: 'UserId',
-      onDelete: 'CASCADE'
-    });
-    
-    UserAccount.belongsTo(models.BusinessUser,{
-      foreignKey: 'BusinessId',
-      onDelete: 'CASCADE'
-    });
 
     UserAccount.belongsTo(models.Role, {
-      foreignKey: 'RoleId',
-      onDelete: 'SET NULL'
-    });
+        foreignKey: 'role_id',
+        onDelete: 'SET NULL'
+      });
 
-    UserAccount.belongsTo(models.UserType,{
-      foreignKey: 'UserTypeId',
+    UserAccount.hasOne(models.User,{
+      foreignKey: 'user_account_id',
       onDelete: 'CASCADE'
     });
+
+
+    UserAccount.hasMany(models.Job, {
+      foreignKey: 'client_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasMany(models.JobApplication, {
+      foreignKey: 'freelancer_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasOne(models.UserPaymentInfo,{
+      foreignKey: 'user_account_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasMany(models.Notification, {
+      foreignKey: 'receiver_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasMany(models.JobReport, {
+      foreignKey: 'user_account_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasMany(models.JobFiles, {
+      foreignKey: 'user_account_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasMany(models.Portfolio, {
+      foreignKey: 'user_account_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasMany(models.Certification, {
+      foreignKey: 'user_account_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasMany(models.Message, {
+      foreignKey: 'sender_id',
+      onDelete: 'CASCADE'
+    });
+
+    UserAccount.hasMany(models.Message, {
+      foreignKey: 'receiver_id',
+      onDelete: 'CASCADE'
+    });
+
+    
+    UserAccount.hasMany(models.UserSkills,{
+      foreignKey: 'user_account_id',
+      onDelete:'CASCADE'
+    });
+
+    UserAccount.hasMany(models.Experience,{
+      foreignKey: 'user_account_id',
+      onDelete:'CASCADE'
+    });
+
+    UserAccount.hasMany(models.Education,{
+      foreignKey: 'user_account_id',
+      onDelete:'CASCADE'
+    });
+
   };
   return UserAccount;
 };

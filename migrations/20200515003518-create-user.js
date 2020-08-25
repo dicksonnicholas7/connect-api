@@ -4,30 +4,44 @@ module.exports = {
     return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        type: Sequelize.INTEGER
       },
-      firstname: {
+      user_account_id:{
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'UserAccounts',
+          key:'user_account_id'
+        }
+      },
+      first_name: {
         type: Sequelize.STRING
       },
-      lastname: {
+      last_name: {
+        type: Sequelize.STRING
+      },
+      
+      job_title: {
+        type: Sequelize.STRING
+      },  
+      availability: {
+        type: Sequelize.STRING
+      },   
+      golden_paragraph: {
         type: Sequelize.STRING
       },
       gender: {
         type: Sequelize.STRING
       },
-      dob: {
+      date_of_birth: {
         type: Sequelize.DATEONLY
       },
-      jobTitle: {
+      country_code: {
         type: Sequelize.STRING
       },
-      email: {
-        type: Sequelize.STRING,
-        unique: true
-      },
-      mobile: {
+      phone: {
         type: Sequelize.STRING
       },
       country: {

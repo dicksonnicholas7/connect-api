@@ -1,19 +1,20 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const JobApplication = sequelize.define('JobApplication', {
-    status: DataTypes.STRING
+    application_status: DataTypes.STRING,
+    application_message: DataTypes.STRING
   }, {});
   JobApplication.associate = function(models) {
     // associations can be defined here
-    JobApplication.belongsTo(models.User, {
-      foreignKey: 'FreelanceId',
+    JobApplication.belongsTo(models.UserAccount, {
+      foreignKey: 'freelancer_id',
       onDelete: 'CASCADE'
     });
 
     JobApplication.belongsTo(models.Job,{
-      foreignKey:'JobId',
+      foreignKey:'job_id',
       onDelete: 'CASCADE'
     });
-  };
+  };  
   return JobApplication;
 };

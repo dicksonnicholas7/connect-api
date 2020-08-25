@@ -2,30 +2,15 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('UserAccounts', {
-      id: {
+      user_account_id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      UserId:{
         type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        references:{
-          model: 'Users',
-          key:'id'
-        }
+        defaultValue: Sequelize.UUIDV4
       },
-      BusinessId:{
-        type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        references:{
-          model: 'BusinessUsers',
-          key:'id'
-        }
-      },
-      username: {
-        type: Sequelize.STRING
+      email: {
+        type: Sequelize.STRING,
+        unique: true
       },
       password: {
         type: Sequelize.STRING
@@ -33,10 +18,19 @@ module.exports = {
       verified: {
         type: Sequelize.BOOLEAN
       },
+      first_time: {
+        type: Sequelize.BOOLEAN
+      },
+      profile_complete_percentage:{
+        type: Sequelize.INTEGER
+      },
       blocked:{
         type: Sequelize.BOOLEAN
       },
-      RoleId:{
+      approved:{
+        type: Sequelize.BOOLEAN
+      },
+      role_id:{
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references:{
@@ -44,20 +38,21 @@ module.exports = {
           key:'id'
         }
       },
-      UserTypeId:{
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references:{
-          model: 'UserTypes',
-          key:'id'
-        }
-      },
       token: {
         type: Sequelize.STRING
       },
+      email_hash: {
+        type: Sequelize.STRING
+      },
+      resetPasswordToken: {
+        type: Sequelize.STRING
+      },
+      resetPasswordExpires:{
+        type: Sequelize.DATE
+      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       updatedAt: {
         allowNull: false,
